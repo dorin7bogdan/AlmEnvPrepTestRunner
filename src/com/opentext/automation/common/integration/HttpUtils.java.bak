@@ -1,0 +1,198 @@
+package com.ot.automation.common.integration;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.Proxy.Type;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import net.minidev.json.JSONObject;
+import net.minidev.json.JSONValue;
+
+public class HttpUtils {
+   public static final String POST = "POST";
+   public static final String GET = "GET";
+
+   private HttpUtils() {
+   }
+
+   public static HttpResponse post(HttpUtils.ProxyInfo proxyInfo, String url, Map<String, String> headers, byte[] data) throws HttpConnectionException {
+      HttpResponse response = null;
+
+      try {
+         response = doHttp(proxyInfo, "POST", url, (String)null, headers, data);
+         return response;
+      } catch (Exception var6) {
+         throw new HttpConnectionException();
+      }
+   }
+
+   public static HttpResponse get(HttpUtils.ProxyInfo proxyInfo, String url, Map<String, String> headers, String queryString) throws HttpConnectionException {
+      HttpResponse response = null;
+
+      try {
+         response = doHttp(proxyInfo, "GET", url, queryString, headers, (byte[])null);
+         return response;
+      } catch (Exception var6) {
+         throw new HttpConnectionException();
+      }
+   }
+
+   private static HttpResponse doHttp(HttpUtils.ProxyInfo proxyInfo, String requestMethod, String connectionUrl, String queryString, Map<String, String> headers, byte[] data) throws IOException {
+      HttpResponse response = new HttpResponse();
+      if (queryString != null && !queryString.isEmpty()) {
+         connectionUrl = connectionUrl + "?" + queryString;
+      }
+
+      URL url = new URL(connectionUrl);
+      HttpURLConnection connection = (HttpURLConnection)openConnection(proxyInfo, url);
+      connection.setRequestMethod(requestMethod);
+      setConnectionHeaders(connection, headers);
+      if (data != null && data.length > 0) {
+         connection.setDoOutput(true);
+
+         try {
+            OutputStream out = connection.getOutputStream();
+            out.write(data);
+            out.flush();
+            out.close();
+         } catch (Throwable var13) {
+            var13.printStackTrace();
+         }
+      }
+
+      connection.connect();
+      int responseCode = connection.getResponseCode();
+      response.setResponseCode(String.valueOf(responseCode));
+      if (responseCode == 200) {
+         InputStream inputStream = connection.getInputStream();
+         JSONObject jsonObject = convertStreamToJSONObject(inputStream);
+         Map<String, List<String>> headerFields = connection.getHeaderFields();
+         response.setHeaders(headerFields);
+         response.setJsonObject(jsonObject);
+      }
+
+      connection.disconnect();
+      return response;
+   }
+
+   private static URLConnection openConnection(final HttpUtils.ProxyInfo proxyInfo, URL _url) throws IOException {
+      Proxy proxy = null;
+      if (proxyInfo != null && proxyInfo._host != null && proxyInfo._port != null && !proxyInfo._host.isEmpty() && !proxyInfo._port.isEmpty()) {
+         try {
+            int port = Integer.parseInt(proxyInfo._port.trim());
+            proxy = new Proxy(Type.HTTP, new InetSocketAddress(proxyInfo._host, port));
+         } catch (Exception var4) {
+            var4.printStackTrace();
+         }
+      }
+
+      if (proxy != null && proxyInfo._userName != null && proxyInfo._password != null && !proxyInfo._password.isEmpty() && !proxyInfo._password.isEmpty()) {
+         Authenticator authenticator = new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+               return new PasswordAuthentication(proxyInfo._userName, proxyInfo._password.toCharArray());
+            }
+         };
+         Authenticator.setDefault(authenticator);
+      }
+
+      return proxy == null ? _url.openConnection() : _url.openConnection(proxy);
+   }
+
+   private static void setConnectionHeaders(HttpURLConnection connection, Map<String, String> headers) {
+      if (connection != null && headers != null && headers.size() != 0) {
+         Iterator headersIterator = headers.entrySet().iterator();
+
+         while(headersIterator.hasNext()) {
+            Entry<String, String> header = (Entry)headersIterator.next();
+            connection.setRequestProperty((String)header.getKey(), (String)header.getValue());
+         }
+      }
+
+   }
+
+   private static JSONObject convertStreamToJSONObject(InputStream inputStream) {
+      JSONObject obj = null;
+      if (inputStream != null) {
+         try {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+            StringBuffer res = new StringBuffer();
+
+            String line;
+            while((line = reader.readLine()) != null) {
+               res.append(line);
+            }
+
+            obj = (JSONObject)JSONValue.parseStrict(res.toString());
+         } catch (Exception var5) {
+            var5.printStackTrace();
+         }
+      }
+
+      return obj;
+   }
+
+   public static HttpUtils.ProxyInfo setProxyCfg(String host, String port, String userName, String password) {
+      return new HttpUtils.ProxyInfo(host, port, userName, password);
+   }
+
+   public static HttpUtils.ProxyInfo setProxyCfg(String host, String port) {
+      HttpUtils.ProxyInfo proxyInfo = new HttpUtils.ProxyInfo();
+      proxyInfo._host = host;
+      proxyInfo._port = port;
+      return proxyInfo;
+   }
+
+   public static HttpUtils.ProxyInfo setProxyCfg(String address, String userName, String password) {
+      HttpUtils.ProxyInfo proxyInfo = new HttpUtils.ProxyInfo();
+      if (address != null) {
+         int i;
+         if (address.endsWith("/")) {
+            i = address.lastIndexOf("/");
+            address = address.substring(0, i);
+         }
+
+         i = address.lastIndexOf(58);
+         if (i > 0) {
+            proxyInfo._host = address.substring(0, i);
+            proxyInfo._port = address.substring(i + 1, address.length());
+         } else {
+            proxyInfo._host = address;
+            proxyInfo._port = "80";
+         }
+
+         proxyInfo._userName = userName;
+         proxyInfo._password = password;
+      }
+
+      return proxyInfo;
+   }
+
+   static class ProxyInfo {
+      private String _host;
+      private String _port;
+      private String _userName;
+      private String _password;
+
+      public ProxyInfo() {
+      }
+
+      public ProxyInfo(String host, String port, String userName, String password) {
+         this._host = host;
+         this._port = port;
+         this._userName = userName;
+         this._password = password;
+      }
+   }
+}
