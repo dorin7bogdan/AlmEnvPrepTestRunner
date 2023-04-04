@@ -1,1 +1,1 @@
-jar -cmf META-INF/MANIFEST.MF opentext.automation.ado-1.0.jar net com org LICENSE README.txt
+jar -cmf META-INF/MANIFEST.MF opentext.automation.ado-1.0.jar net com org LICENSE README.md
