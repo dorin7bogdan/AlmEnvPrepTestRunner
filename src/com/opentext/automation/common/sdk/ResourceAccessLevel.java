@@ -7,9 +7,9 @@ public enum ResourceAccessLevel {
     PROTECTED(RESTConstants.PtaL),
     PRIVATE(RESTConstants.PvaL);
 
-    private String _headerName;
+    private final String _headerName;
 
-    private ResourceAccessLevel(String headerName) {
+    ResourceAccessLevel(String headerName) {
         this._headerName = headerName;
     }
 

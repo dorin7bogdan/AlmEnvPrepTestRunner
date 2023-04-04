@@ -1,8 +1,8 @@
 package com.opentext.automation.common.model;
 
 public class EnumDescription {
-   private String description;
-   private String value;
+   private final String description;
+   private final String value;
 
    public EnumDescription(String value, String description) {
       this.value = value;

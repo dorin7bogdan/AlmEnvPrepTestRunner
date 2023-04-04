@@ -36,8 +36,8 @@ public class EventLogHandler extends Handler {
          }
 
          ret = true;
-      } catch (Throwable var8) {
-         logger.log(String.format("Failed to print Event Log: %s (run id: %s, reservation id: %s). Cause: %s", eventLog, this._runId, this._timeslotId, var8));
+      } catch (Throwable t) {
+         logger.log(String.format("Failed to print Event Log: %s (run id: %s, reservation id: %s). Cause: %s", eventLog, this._runId, this._timeslotId, t));
       }
 
       return ret;
@@ -45,7 +45,7 @@ public class EventLogHandler extends Handler {
 
    private boolean isNew(Map<String, String> currEntity) {
       boolean ret = false;
-      int currEvent = Integer.parseInt((String)currEntity.get("id"));
+      int currEvent = Integer.parseInt(currEntity.get("id"));
       if (currEvent > this._lastRead) {
          this._lastRead = currEvent;
          ret = true;

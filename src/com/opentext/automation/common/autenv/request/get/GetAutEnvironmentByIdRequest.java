@@ -4,7 +4,7 @@ import com.opentext.automation.common.sdk.Client;
 import com.opentext.automation.common.sdk.request.GeneralGetRequest;
 
 public class GetAutEnvironmentByIdRequest extends GeneralGetRequest {
-   private String autEnvironmentId;
+   private final String autEnvironmentId;
 
    public GetAutEnvironmentByIdRequest(Client client, String autEnvironmentId) {
       super(client);

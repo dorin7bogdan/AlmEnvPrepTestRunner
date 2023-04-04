@@ -1,27 +1,26 @@
 import com.opentext.automation.ado.MainClass;
 
-public class Main {
+public class TestMainClass {
     public static void main(String[] args) {
-        String[] arr = new String[19];
-        arr[0] = "lep";
-        arr[1] = "http://10.168.86.112:8080/qcbin";
-        arr[2] = "sa";
-        arr[3] = "pass:" ;
-        arr[4] = "DEFAULT";
-        arr[5] = "CI_Integration" ;
-        arr[6] = "1004" ;
-        arr[7] = "newconf" ;
-        arr[8] = "newnamed:DEV2" ;
-        arr[9] = "assign:" ;
-        arr[10] = "useasexisting:" ;
-        arr[11] = "jsonpath:" ;
-        arr[12] = "false" ;
-        arr[13] = "partype1:Manual" ;
-        arr[14] = "parname1:Parameters/MyParam" ;
-        arr[15] = "parval1:77" ;
-        arr[16] = "partype2:Manual";
-        arr[17] = "parname2:Parameters/MyParam2";
-        arr[18] = "parval2:ADO";
+        String[] arr = new String[18];
+        arr[0] = "http://10.168.86.112:8080/qcbin";
+        arr[1] = "sa";
+        arr[2] = "pass:" ;
+        arr[3] = "DEFAULT";
+        arr[4] = "CI_Integration" ;
+        arr[5] = "1004" ;
+        arr[6] = "newconf" ;
+        arr[7] = "newnamed:DEV2" ;
+        arr[8] = "assign:" ;
+        arr[9] = "useasexisting:" ;
+        arr[10] = "jsonpath:" ;
+        arr[11] = "false" ;
+        arr[12] = "partype1:Manual" ;
+        arr[13] = "parname1:Parameters/MyParam" ;
+        arr[14] = "parval1:77" ;
+        arr[15] = "partype2:Manual";
+        arr[16] = "parname2:Parameters/MyParam2";
+        arr[17] = "parval2:ADO";
         MainClass.main(arr);
     }
 }

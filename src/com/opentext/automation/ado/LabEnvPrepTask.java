@@ -25,7 +25,7 @@ public class LabEnvPrepTask extends AbstractTask {
    private int UseAsConfId;
    private String PathToJSON;
    private boolean ParamOnlyFirst;
-   private List<AutEnvironmentParameterModel> AutEnvironmentParameters = new ArrayList();
+   private final List<AutEnvironmentParameterModel> AutEnvironmentParameters = new ArrayList();
 
    public void parseArgs(String[] args) throws Exception {
       if (args.length < 1) {
@@ -41,7 +41,7 @@ public class LabEnvPrepTask extends AbstractTask {
             } else {
                try {
                   this.Pass = this.extractPasswordFromParameter(args[2]);
-               } catch (Throwable var14) {
+               } catch (Throwable t) {
                   throw new Exception("Failed to extract 'Password' from argument (use 'pass:' prefix)");
                }
 
@@ -58,7 +58,7 @@ public class LabEnvPrepTask extends AbstractTask {
                      } else {
                         try {
                            this.EnvId = Integer.valueOf(args[5]);
-                        } catch (Throwable var13) {
+                        } catch (Throwable t) {
                            throw new Exception("Failed to parse AUT Environment ID parameter (use unsigned integer value)");
                         }
 
@@ -67,7 +67,7 @@ public class LabEnvPrepTask extends AbstractTask {
                         } else {
                            try {
                               this.Action = Enum.valueOf(EnvConfigAction.class, args[6].toLowerCase());
-                           } catch (Throwable var12) {
+                           } catch (Throwable t) {
                               throw new Exception("Failed to parse 'New/Existing' parameter (use 'newconf' or 'existing' value)");
                            }
 
@@ -76,7 +76,7 @@ public class LabEnvPrepTask extends AbstractTask {
                            } else {
                               try {
                                  this.NewConfName = this.extractvalueFromParameter(args[7], "newnamed:");
-                              } catch (Throwable var11) {
+                              } catch (Throwable t) {
                                  throw new Exception("Failed to extract 'Create new configuration named' parameter (use 'newnamed:' prefix)");
                               }
 
@@ -87,7 +87,7 @@ public class LabEnvPrepTask extends AbstractTask {
 
                                  try {
                                     this.UseAsConfId = Integer.valueOf(this.extractvalueFromParameter(args[9].toLowerCase(), "useasexisting:"));
-                                 } catch (Throwable var10) {
+                                 } catch (Throwable t) {
                                     throw new Exception("Failed to parse 'Use as existing config with ID' parameter (use unsigned integer value with 'useasexisting:' prefix)");
                                  }
                               }
@@ -97,7 +97,7 @@ public class LabEnvPrepTask extends AbstractTask {
                               } else {
                                  try {
                                     this.PathToJSON = this.extractvalueFromParameter(args[10], "jsonpath:");
-                                 } catch (Throwable var9) {
+                                 } catch (Throwable t) {
                                     throw new Exception("Failed to extract 'Path to JSON file' parameter (use 'jsonpath:' preffix)");
                                  }
 
@@ -106,7 +106,7 @@ public class LabEnvPrepTask extends AbstractTask {
                                  } else {
                                     try {
                                        this.ParamOnlyFirst = Boolean.parseBoolean(args[11]);
-                                    } catch (Throwable var8) {
+                                    } catch (Throwable t) {
                                        throw new Exception("Failed to extract 'Get only the first value...' parameter");
                                     }
 
@@ -117,14 +117,13 @@ public class LabEnvPrepTask extends AbstractTask {
                                        EnvParamType paramType;
                                        try {
                                           paramType = Enum.valueOf(EnvParamType.class, this.extractvalueFromParameter(args[12 + (i - 1) * 3], "partype" + i + ":").toLowerCase());
-                                       } catch (Throwable var7) {
-                                          throw new Exception("Failed to parse 'Parameter type' of " + Integer.toString(i) + " parameter value: '" + args[12 + (i - 1) * 3] + "'. Use 'json' or 'environment' or 'manual' value.");
+                                       } catch (Throwable t) {
+                                          throw new Exception("Failed to parse 'Parameter type' of " + i + " parameter value: '" + args[12 + (i - 1) * 3] + "'. Use 'json' or 'environment' or 'manual' value.");
                                        }
 
                                        AutEnvironmentParameterType type = this.convertType(paramType);
                                        this.AutEnvironmentParameters.add(new AutEnvironmentParameterModel(paramName, paramValue, type, this.ParamOnlyFirst));
                                     }
-
                                  }
                               }
                            }

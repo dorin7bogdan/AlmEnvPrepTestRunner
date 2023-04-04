@@ -18,8 +18,8 @@ import java.util.Map;
 
 public class AUTEnvironmentManager {
     public static final String ALM_AUT_ENVIRONMENT_CONFIGURATION_ID_FIELD = "id";
-    private Logger logger;
-    private Client client;
+    private final Logger logger;
+    private final Client client;
 
     public AUTEnvironmentManager(Client client, Logger logger) {
         this.client = client;
@@ -39,9 +39,9 @@ public class AUTEnvironmentManager {
                 throw new SSEException(String.format("Failed to get AUT Environment with ID: [%s]", autEnvironmentId), response.getFailure());
             }
 
-            Map<String, String> autEnvironment = (Map)entities.get(0);
-            parametersRootFolderId = autEnvironment == null ? null : (String)autEnvironment.get("root-app-param-folder-id");
-        } catch (Throwable var6) {
+            Map<String, String> autEnvironment = entities.get(0);
+            parametersRootFolderId = autEnvironment == null ? null : autEnvironment.get("root-app-param-folder-id");
+        } catch (Throwable t) {
             this.logger.log(String.format("Failed to parse response: %s", response));
         }
 
@@ -62,7 +62,7 @@ public class AUTEnvironmentManager {
         } else {
             try {
                 newAutEnvironmentConfigurationId = XPathUtils.getAttributeValue(response.toString(), "id");
-            } catch (Throwable var6) {
+            } catch (Throwable t) {
                 this.logger.log(String.format("Failed to parse response: %s", response));
             }
 
@@ -85,6 +85,6 @@ public class AUTEnvironmentManager {
     }
 
     private String createTempConfigurationName() {
-        return "Configuration_" + Calendar.getInstance().getTime().toString();
+        return "Configuration_" + Calendar.getInstance().getTime();
     }
 }

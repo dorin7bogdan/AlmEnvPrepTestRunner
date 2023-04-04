@@ -36,7 +36,7 @@ public abstract class GeneralPostRequest extends GeneralRequest {
 
       while(var2.hasNext()) {
          Pair<String, String> currPair = (Pair)var2.next();
-         builder.append(RestXmlUtils.fieldXml((String)currPair.getFirst(), (String)currPair.getSecond()));
+         builder.append(RestXmlUtils.fieldXml(currPair.getFirst(), currPair.getSecond()));
       }
 
       return builder.append("</Fields></Entity>").toString().getBytes();

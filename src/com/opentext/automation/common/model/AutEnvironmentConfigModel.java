@@ -3,7 +3,7 @@ package com.opentext.automation.common.model;
 import java.util.List;
 
 public class AutEnvironmentConfigModel {
-    private String almServerUrl;
+    private final String almServerUrl;
     private final String almUserName;
     private final String almPassword;
     private final String almDomain;
@@ -12,7 +12,7 @@ public class AutEnvironmentConfigModel {
     private final String autEnvID;
     private final String autEnvConf;
     private final String pathToJsonFile;
-    private List<AutEnvironmentParameterModel> autEnvironmentParameters;
+    private final List<AutEnvironmentParameterModel> autEnvironmentParameters;
     private String currentConfigID;
 
     public AutEnvironmentConfigModel(String almServerUrl, String almUserName, String almPassword, String almDomain, String almProject, boolean useExistingAutEnvConf, String autEnvID, String envConf, String pathToJsonFile, List<AutEnvironmentParameterModel> autEnvironmentParameters) {

@@ -13,9 +13,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class AUTEnvironmentBuilderPerformer {
-    private Client client;
-    private Logger logger;
-    private AutEnvironmentConfigModel model;
+    private final Client client;
+    private final Logger logger;
+    private final AutEnvironmentConfigModel model;
 
     public AUTEnvironmentBuilderPerformer(Client client, Logger logger, AutEnvironmentConfigModel model) {
         this.client = client;
@@ -31,9 +31,9 @@ public class AUTEnvironmentBuilderPerformer {
             } else {
                 throw new SSEException("Failed to login to ALM");
             }
-        } catch (Throwable var2) {
-            this.logger.log(String.format("Failed to update ALM AUT Environment. Cause: %s", var2.getMessage()));
-            throw var2;
+        } catch (Throwable t) {
+            this.logger.log(String.format("Failed to update ALM AUT Environment. Cause: %s", t.getMessage()));
+            throw t;
         }
     }
 
@@ -41,9 +41,9 @@ public class AUTEnvironmentBuilderPerformer {
         boolean ret;
         try {
             ret = (new RestAuthenticator()).login(this.client, this.model.getAlmUserName(), this.model.getAlmPassword(), this.logger);
-        } catch (Throwable var3) {
+        } catch (Throwable t) {
             ret = false;
-            this.logger.log(String.format("Failed login to ALM Server URL: %s. Exception: %s", this.model.getAlmServerUrl(), var3.getMessage()));
+            this.logger.log(String.format("Failed login to ALM Server URL: %s. Exception: %s", this.model.getAlmServerUrl(), t.getMessage()));
         }
 
         return ret;

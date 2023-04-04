@@ -4,9 +4,9 @@ public class AUTEnvironmentFolder {
    public static final String ALM_PARAMETER_FOLDER_ID_FIELD = "id";
    public static final String ALM_PARAMETER_FOLDER_PARENT_ID_FIELD = "parent-id";
    public static final String ALM_PARAMETER_FOLDER_NAME_FIELD = "name";
-   private String id;
-   private String name;
-   private String parentId;
+   private final String id;
+   private final String name;
+   private final String parentId;
    private String path;
 
    public AUTEnvironmentFolder(String id, String parentId, String name) {

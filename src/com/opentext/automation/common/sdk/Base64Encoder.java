@@ -2,7 +2,7 @@ package com.opentext.automation.common.sdk;
 
 public class Base64Encoder {
    private static final char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
-   private static int[] _toInt = new int[128];
+   private static final int[] _toInt = new int[128];
 
    public static String encode(byte[] buf) {
       int size = buf.length;

@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CreateAutEnvConfRequest extends GeneralPostRequest {
-   private String autEnvironmentId;
-   private String name;
+   private final String autEnvironmentId;
+   private final String name;
 
    public CreateAutEnvConfRequest(Client client, String autEnvironmentId, String name) {
       super(client);

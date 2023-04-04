@@ -19,8 +19,8 @@ public abstract class GeneralRequest {
 
       try {
          ret = this.perform();
-      } catch (Throwable var3) {
-         ret.setFailure(var3);
+      } catch (Throwable t) {
+         ret.setFailure(t);
       }
 
       return ret;

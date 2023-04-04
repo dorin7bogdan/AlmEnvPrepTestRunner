@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public class PutAutEnvironmentParametersBulkRequest extends GeneralPutBulkRequest {
-   private Collection<AUTEnvironmnentParameter> parameters;
+   private final Collection<AUTEnvironmnentParameter> parameters;
 
    public PutAutEnvironmentParametersBulkRequest(Client client, Collection<AUTEnvironmnentParameter> parameters) {
       super(client);

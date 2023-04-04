@@ -4,7 +4,7 @@ import com.opentext.automation.common.sdk.Client;
 import com.opentext.automation.common.sdk.request.GeneralGetRequest;
 
 public class GetAutEnvFoldersByIdRequest extends GeneralGetRequest {
-   private String folderId;
+   private final String folderId;
 
    public GetAutEnvFoldersByIdRequest(Client client, String folderId) {
       super(client);

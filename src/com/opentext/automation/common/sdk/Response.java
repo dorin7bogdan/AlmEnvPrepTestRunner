@@ -10,11 +10,11 @@ public class Response {
     private int _statusCode;
 
     public Response() {
-        this((Map)null, (byte[])null, (Exception)null, -1);
+        this(null, null, null, -1);
     }
 
     public Response(Exception failure) {
-        this((Map)null, (byte[])null, failure, -1);
+        this(null, null, failure, -1);
     }
 
     public Response(Map<String, List<String>> headers, byte[] data, Exception failure, int statusCode) {

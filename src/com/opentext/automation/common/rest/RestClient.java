@@ -310,7 +310,7 @@ public class RestClient implements Client {
          index = host.lastIndexOf(58);
          if (index > 0) {
             proxyInfo._host = host.substring(0, index);
-            proxyInfo._port = host.substring(index + 1, host.length());
+            proxyInfo._port = host.substring(index + 1);
          } else {
             proxyInfo._host = host;
             proxyInfo._port = "80";
@@ -338,7 +338,7 @@ public class RestClient implements Client {
       SSLContext sslcontext;
       try {
          sslcontext = SSLContext.getInstance("SSL");
-         sslcontext.init((KeyManager[])null, new TrustManager[]{trustManager}, (SecureRandom)null);
+         sslcontext.init(null, new TrustManager[]{trustManager}, null);
       } catch (KeyManagementException var3) {
          throw new SSEException(var3);
       } catch (NoSuchAlgorithmException var4) {

@@ -33,16 +33,16 @@ public class RestAuthenticator {
       String credEncodedString = "Basic " + Base64Encoder.encode(credBytes);
       Map<String, String> headers = new HashMap();
       headers.put("Authorization", credEncodedString);
-      return client.httpGet(loginUrl, (String)null, headers, ResourceAccessLevel.PUBLIC);
+      return client.httpGet(loginUrl, null, headers, ResourceAccessLevel.PUBLIC);
    }
 
    public boolean logout(RestClient client, String username) {
-      Response response = client.httpGet(client.build("authentication-point/logout"), (String)null, (Map)null, ResourceAccessLevel.PUBLIC);
+      Response response = client.httpGet(client.build("authentication-point/logout"), null, null, ResourceAccessLevel.PUBLIC);
       return response.isOk();
    }
 
    public String isAuthenticated(Client client, Logger logger) {
-      Response response = client.httpGet(client.build("rest/is-authenticated"), (String)null, (Map)null, ResourceAccessLevel.PUBLIC);
+      Response response = client.httpGet(client.build("rest/is-authenticated"), null, null, ResourceAccessLevel.PUBLIC);
       int responseCode = response.getStatusCode();
       String ret;
       if (responseCode == 200) {
@@ -52,8 +52,8 @@ public class RestAuthenticator {
          if (responseCode != 401) {
             try {
                throw response.getFailure();
-            } catch (Throwable var7) {
-               throw new SSEException(var7);
+            } catch (Throwable t) {
+               throw new SSEException(t);
             }
          }
 

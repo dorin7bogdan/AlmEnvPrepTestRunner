@@ -18,20 +18,20 @@ public class MainClass {
 
       try {
          try {
-            t.parseArgs(Arrays.copyOfRange(args, 1, args.length));
-         } catch (Throwable var5) {
-            System.out.println("Parameter parsing FAILED with error: " + var5.getMessage());
+            t.parseArgs(Arrays.copyOfRange(args, 0, args.length));
+         } catch (Throwable ex) {
+            System.out.println("Parameter parsing FAILED with error: " + ex.getMessage());
             System.exit(ExitCode_Error_FailedParseArgs);
          }
 
          try {
             t.execute();
-         } catch (Throwable var4) {
-            System.out.println("Execution FAILED with error: " + var4.getMessage());
+         } catch (Throwable ex) {
+            System.out.println("Execution FAILED with error: " + ex.getMessage());
             System.exit(ExitCode_Error_FailedExecute);
          }
-      } catch (Throwable var6) {
-         System.out.println("Failed run with error: " + var6.getMessage());
+      } catch (Throwable ex) {
+         System.out.println("Failed run with error: " + ex.getMessage());
          System.exit(ExitCode_Error_TaskExecutionInnerException);
       }
    }

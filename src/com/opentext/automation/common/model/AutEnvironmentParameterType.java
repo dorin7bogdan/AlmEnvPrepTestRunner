@@ -6,9 +6,9 @@ public enum AutEnvironmentParameterType {
    EXTERNAL("From JSON"),
    USER_DEFINED("Manual");
 
-   private String value;
+   private final String value;
 
-   private AutEnvironmentParameterType(String value) {
+   AutEnvironmentParameterType(String value) {
       this.value = value;
    }
 

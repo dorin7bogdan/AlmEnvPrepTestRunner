@@ -27,13 +27,13 @@ import static com.opentext.automation.common.model.AutEnvironmentParameterType.E
 
 public class AUTEnvironmentParametersManager {
    public static final String PARAMETER_PATH_DELIMITER = "/";
-   private Logger logger;
-   private Client client;
-   private String parametersRootFolderId;
-   private String autEnvironmentConfigurationId;
+   private final Logger logger;
+   private final Client client;
+   private final String parametersRootFolderId;
+   private final String autEnvironmentConfigurationId;
    private Map<String, AUTEnvironmnentParameter> parameters;
-   private List<AutEnvironmentParameterModel> parametersToAssign;
-   private String pathToJsonFile;
+   private final List<AutEnvironmentParameterModel> parametersToAssign;
+   private final String pathToJsonFile;
 
    public AUTEnvironmentParametersManager(Client client, List<AutEnvironmentParameterModel> parametersToAssign, String parametersRootFolderId, String autEnvironmentConfigurationId, String pathToJsonFile, Logger logger) {
       this.logger = logger;

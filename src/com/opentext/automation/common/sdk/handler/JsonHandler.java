@@ -7,11 +7,13 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
 import net.minidev.json.JSONArray;
 import org.apache.commons.io.IOUtils;
 
 public class JsonHandler {
-   private Logger logger;
+   private final Logger logger;
 
    public JsonHandler(Logger logger) {
       this.logger = logger;
@@ -22,11 +24,11 @@ public class JsonHandler {
 
       try {
          InputStream is = new FileInputStream(path);
-         String jsonTxt = IOUtils.toString((InputStream)is, "UTF-8");
+         String jsonTxt = IOUtils.toString(is, StandardCharsets.UTF_8);
          Object parsedJson = Configuration.defaultConfiguration().addOptions(Option.ALWAYS_RETURN_LIST).jsonProvider().parse(jsonTxt);
          return parsedJson;
-      } catch (Throwable var5) {
-         throw new SSEException(String.format("Failed to load JSON from: [%s]", path), var5);
+      } catch (Throwable t) {
+         throw new SSEException(String.format("Failed to load JSON from: [%s]", path), t);
       }
    }
 
@@ -39,8 +41,8 @@ public class JsonHandler {
          }
 
          value = extractedObject.toString();
-      } catch (Throwable var6) {
-         this.logger.log(String.format("Failed to get the value of [%s] from the JSON file.\n\tError was: %s", pathToRead, var6.getMessage()));
+      } catch (Throwable t) {
+         this.logger.log(String.format("Failed to get the value of [%s] from the JSON file.\n\tError was: %s", pathToRead, t.getMessage()));
       }
 
       return value;

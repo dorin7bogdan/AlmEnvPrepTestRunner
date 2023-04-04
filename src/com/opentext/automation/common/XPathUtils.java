@@ -47,8 +47,8 @@ public class XPathUtils {
          String attr;
          try {
             attr = getNecessaryAttribute(currNode, "Name");
-         } catch (Throwable var8) {
-            throw new SSEException(var8);
+         } catch (Throwable t) {
+            throw new SSEException(t);
          }
 
          if (attr.equals(attrName)) {
@@ -74,7 +74,7 @@ public class XPathUtils {
    }
 
    private static NodeList getChildNodes(String xml, String xpath) {
-      NodeList ret = null;
+      NodeList ret;
 
       try {
          Document document = getDocument(xml);
@@ -82,8 +82,8 @@ public class XPathUtils {
          XPathExpression expression = factory.newXPath().compile(xpath);
          ret = (NodeList)expression.evaluate(document, XPathConstants.NODESET);
          return ret;
-      } catch (Throwable var6) {
-         throw new SSEException(var6);
+      } catch (Throwable t) {
+         throw new SSEException(t);
       }
    }
 
@@ -106,7 +106,7 @@ public class XPathUtils {
    }
 
    private static Document getDocument(String xml) {
-      Document ret = null;
+      Document ret;
 
       try {
          DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -114,8 +114,8 @@ public class XPathUtils {
          inputSource.setCharacterStream(new StringReader(xml));
          ret = builder.parse(inputSource);
          return ret;
-      } catch (Throwable var4) {
-         throw new SSEException(var4);
+      } catch (Throwable t) {
+         throw new SSEException(t);
       }
    }
 }

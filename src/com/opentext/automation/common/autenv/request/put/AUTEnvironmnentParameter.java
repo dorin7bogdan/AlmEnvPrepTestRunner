@@ -5,9 +5,9 @@ public class AUTEnvironmnentParameter {
    public static final String ALM_PARAMETER_PARENT_ID_FIELD = "parent-id";
    public static final String ALM_PARAMETER_NAME_FIELD = "name";
    public static final String ALM_PARAMETER_VALUE_FIELD = "value";
-   private String id;
-   private String parentId;
-   private String name;
+   private final String id;
+   private final String parentId;
+   private final String name;
    private String value;
    private String fullPath;
 
